@@ -26,10 +26,7 @@ import javafx.stage.Stage;
  * @author Kevin Zhang <kzhang@espol.edu.ec>
  */
 public class TickAndToe extends Application {
-    
-    public static String loginName = "login";
-    public static String menuNombre = "menu";
-    public static String registerName = "register";
+   
     public Stage stage;
     Font bits;
     
@@ -45,13 +42,14 @@ public class TickAndToe extends Application {
         this.stage = primaryStage;
         
         ControladorPantallas controlador = new ControladorPantallas(this.stage);
-        
+        controlador.setBits(bits);
         controlador.setSize(new Integer[]{1280,720});
         
-        EscenaControlable menuPrincipal = new escenaMenu(this.bits);
+        EscenaControlable menuPrincipal = new escenaMenu();
         
-        controlador.addScene(menuNombre, menuPrincipal);
-        controlador.setScene(menuNombre);
+        controlador.addScene(controlador.menuNombre, menuPrincipal);
+        controlador.addScene(controlador.juegoNombre, menuPrincipal);
+        controlador.setScene(controlador.menuNombre);
         
         Scene scene = controlador.getScene();
         

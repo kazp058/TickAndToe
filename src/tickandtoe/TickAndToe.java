@@ -5,12 +5,21 @@
  */
 package tickandtoe;
 
+import escenas.ControladorPantallas;
+import escenas.EscenaControlable;
+import escenas.escenaJuego;
+import escenas.escenaMenu;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -18,27 +27,43 @@ import javafx.stage.Stage;
  * @author Kevin Zhang <kzhang@espol.edu.ec>
  */
 public class TickAndToe extends Application {
-    
+   
+    public Stage stage;
+    Font bits;
+    Font bitsTitle;
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
         
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
+        try {
+            this.bits = Font.loadFont(new FileInputStream("src/res/upheavtt.ttf"), 20);
+            this.bitsTitle = Font.loadFont(new FileInputStream("src/res/upheavtt.ttf"), 40);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TickAndToe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.stage = primaryStage;
         
-        Scene scene = new Scene(root, 300, 250);
+        ControladorPantallas controlador = new ControladorPantallas(this.stage);
+        controlador.setBits(bits);
+        controlador.setBitsTitle(bitsTitle);
+        controlador.setSize(new Integer[]{1280,720});
         
-        primaryStage.setTitle("Hello World!");
+        System.out.println(controlador.getInicia());
+        
+        EscenaControlable menuPrincipal = new escenaMenu();
+        EscenaControlable juego = new escenaJuego();
+        
+        controlador.addScene(controlador.menuNombre, menuPrincipal);
+        controlador.addScene(controlador.juegoNombre, juego);
+        controlador.setScene(controlador.menuNombre);
+        
+        Scene scene = controlador.getScene();
+        
+        primaryStage.setTitle("Tick & Toe");
         primaryStage.setScene(scene);
         primaryStage.show();
+        primaryStage.setOnCloseRequest((e) -> {
+        });
     }
 
     /**

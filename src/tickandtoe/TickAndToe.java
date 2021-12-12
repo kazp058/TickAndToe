@@ -7,6 +7,7 @@ package tickandtoe;
 
 import escenas.ControladorPantallas;
 import escenas.EscenaControlable;
+import escenas.escenaJuego;
 import escenas.escenaMenu;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,12 +30,13 @@ public class TickAndToe extends Application {
    
     public Stage stage;
     Font bits;
-    
+    Font bitsTitle;
     @Override
     public void start(Stage primaryStage) {
         
         try {
             this.bits = Font.loadFont(new FileInputStream("src/res/upheavtt.ttf"), 20);
+            this.bitsTitle = Font.loadFont(new FileInputStream("src/res/upheavtt.ttf"), 40);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TickAndToe.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,12 +45,16 @@ public class TickAndToe extends Application {
         
         ControladorPantallas controlador = new ControladorPantallas(this.stage);
         controlador.setBits(bits);
+        controlador.setBitsTitle(bitsTitle);
         controlador.setSize(new Integer[]{1280,720});
         
+        System.out.println(controlador.getInicia());
+        
         EscenaControlable menuPrincipal = new escenaMenu();
+        EscenaControlable juego = new escenaJuego();
         
         controlador.addScene(controlador.menuNombre, menuPrincipal);
-        controlador.addScene(controlador.juegoNombre, menuPrincipal);
+        controlador.addScene(controlador.juegoNombre, juego);
         controlador.setScene(controlador.menuNombre);
         
         Scene scene = controlador.getScene();

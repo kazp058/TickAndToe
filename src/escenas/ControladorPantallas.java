@@ -20,9 +20,18 @@ public class ControladorPantallas {
     private Scene escenaActual;
     private Stage stage;
 
+    private char jugador;
+    private short inicia; //Si es 0 inicia el jugador, si es 1 inicia el computador
+
     public static String juegoNombre = "playground";
     public static String menuNombre = "menu";
     public static String registerName = "register";
+
+    public ControladorPantallas() {
+
+        this.jugador = '-';
+        this.inicia = -1;
+    }
 
     public char getJugador() {
         return jugador;
@@ -34,7 +43,15 @@ public class ControladorPantallas {
 
     private Integer[] dimensiones;
     private Font bits;
-    private char jugador;
+    private Font bitsTitle;
+
+    public Font getBitsTitle() {
+        return bitsTitle;
+    }
+
+    public void setBitsTitle(Font bitsTitle) {
+        this.bitsTitle = bitsTitle;
+    }
 
     public Integer[] getDimensiones() {
         return dimensiones;
@@ -48,12 +65,22 @@ public class ControladorPantallas {
         return bits;
     }
 
+    public short getInicia() {
+        return inicia;
+    }
+
+    public void setInicia(short inicia) {
+        this.inicia = inicia;
+    }
+
     public void setBits(Font bits) {
         this.bits = bits;
     }
 
     public ControladorPantallas(Stage stage) {
         this.stage = stage;
+        this.jugador = '-';
+        this.inicia = -1;
     }
 
     public Stage getStage() {
@@ -90,4 +117,11 @@ public class ControladorPantallas {
         this.escenaActual = escena;
     }
 
+    public void getFirstMove() {
+
+    }
+
+    public void getPlayerSign() {
+
+    }
 }

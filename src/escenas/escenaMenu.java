@@ -29,12 +29,9 @@ import javafx.scene.text.TextAlignment;
 public class escenaMenu implements EscenaControlable {
 
     ControladorPantallas controlador;
-    private char jugador;
-    private short inicia; //Si es 0 inicia el jugador, si es 1 inicia el computador
 
     public escenaMenu() {
-        this.jugador = '-';
-        this.inicia = -1;
+
     }
 
     @Override
@@ -48,74 +45,74 @@ public class escenaMenu implements EscenaControlable {
         menu.setVgap(10);
         menu.setAlignment(Pos.CENTER);
 
-        Text selecPer = textLabel("Selecciona tu personaje");
-        Button botonX = imageButton("res/x.png");
-        Button botonO = imageButton("res/o.png");
+        Text selecPer = Toolkit.textLabel("Elije tu icono:", controlador.getBits());
+        Button botonX = Toolkit.imageButton("res/x.png");
+        Button botonO = Toolkit.imageButton("res/o.png");
 
-        Text selecStart = textLabel("Selecciona quien inicia:");
-        Button botonJugador = imageButton("res/person.png");
-        Button botonComputador = imageButton("res/ai.png");
+        Text selecStart = Toolkit.textLabel("Elije quien inicia:", controlador.getBits());
+        Button botonJugador = Toolkit.imageButton("res/person.png");
+        Button botonComputador = Toolkit.imageButton("res/ai.png");
 
         botonX.setOnMouseClicked((e) -> {
-            this.jugador = 'x';
+            controlador.setJugador('x');
             botonX.setStyle("-fx-background-color: #6600ff");
             botonO.setStyle("-fx-background-color: transparent");
         });
         botonX.setOnMouseEntered((e) -> {
-            if (Character.compare(jugador, '-') == 0 || Character.compare(jugador, 'o') == 0) {
+            if (Character.compare(controlador.getJugador(), '-') == 0 || Character.compare(controlador.getJugador(), 'o') == 0) {
                 botonX.setStyle("-fx-background-color: #dcccff");
             }
         });
         botonX.setOnMouseExited((e) -> {
-            if (Character.compare(jugador, '-') == 0 || Character.compare(jugador, 'o') == 0) {
+            if (Character.compare(controlador.getJugador(), '-') == 0 || Character.compare(controlador.getJugador(), 'o') == 0) {
                 botonX.setStyle("-fx-background-color: transparent");
             }
         });
 
         botonO.setOnMouseClicked((e) -> {
-            this.jugador = 'o';
+            controlador.setJugador('o');
             botonO.setStyle("-fx-background-color: #6600ff");
             botonX.setStyle("-fx-background-color: transparent");
         });
         botonO.setOnMouseEntered((e) -> {
-            if (Character.compare(jugador, '-') == 0 || Character.compare(jugador, 'x') == 0) {
+            if (Character.compare(controlador.getJugador(), '-') == 0 || Character.compare(controlador.getJugador(), 'x') == 0) {
                 botonO.setStyle("-fx-background-color: #dcccff");
             }
         });
         botonO.setOnMouseExited((e) -> {
-            if (Character.compare(jugador, '-') == 0 || Character.compare(jugador, 'x') == 0) {
+            if (Character.compare(controlador.getJugador(), '-') == 0 || Character.compare(controlador.getJugador(), 'x') == 0) {
                 botonO.setStyle("-fx-background-color: transparent");
             }
         });
 
         botonJugador.setOnMouseClicked((e) -> {
-            inicia = 0;
+            controlador.setInicia((short)0);
             botonJugador.setStyle("-fx-background-color: #6600ff");
             botonComputador.setStyle("-fx-background-color: transparent");
         });
         botonJugador.setOnMouseEntered((e) -> {
-            if (inicia == -1 || inicia == 1) {
+            if (controlador.getInicia() == -1 || controlador.getInicia() == 1) {
                 botonJugador.setStyle("-fx-background-color: #dcccff");
             }
         });
         botonJugador.setOnMouseExited((e) -> {
-            if (inicia == -1 || inicia == 1) {
+            if (controlador.getInicia() == -1 || controlador.getInicia() == 1) {
                 botonJugador.setStyle("-fx-background-color: transparent");
             }
         });
         botonComputador.setOnMouseClicked((e) -> {
-            inicia = 1;
+            controlador.setInicia((short)1);
             botonComputador.setStyle("-fx-background-color: #6600ff");
             botonJugador.setStyle("-fx-background-color: transparent");
         });
 
         botonComputador.setOnMouseEntered((e) -> {
-            if (inicia == -1 || inicia == 0) {
+            if (controlador.getInicia() == -1 || controlador.getInicia() == 0) {
                 botonComputador.setStyle("-fx-background-color: #dcccff");
             }
         });
         botonComputador.setOnMouseExited((e) -> {
-            if (inicia == -1 || inicia == 0) {
+            if (controlador.getInicia() == -1 || controlador.getInicia() == 0) {
                 botonComputador.setStyle("-fx-background-color: transparent");
             }
         });
@@ -125,16 +122,16 @@ public class escenaMenu implements EscenaControlable {
         iniciarBox.setAlignment(Pos.CENTER);
         iniciarBox.setStyle("-fx-background-color: transparent");
 
-        Text iniciar = textLabel("Iniciar");
+        Text iniciar = Toolkit.textLabel("Iniciar Juego", controlador.getBits());
         iniciarBox.setOnMouseEntered((e) -> {
-            if(inicia != -1 && Character.compare(jugador, '-') != 0){
+            if(controlador.getInicia() != -1 && Character.compare(controlador.getJugador(), '-') != 0){
                 iniciarBox.setStyle("-fx-background-color: #dcccff");
             }            
         });
         iniciarBox.setOnMouseClicked((e)->{
-            if(inicia != -1 && Character.compare(jugador, '-') != 0){
+            if(controlador.getInicia() != -1 && Character.compare(controlador.getJugador(), '-') != 0){
                 iniciarBox.setStyle("-fx-background-color: #6600ff");
-                controlador.setScene("playground");
+                controlador.setScene(controlador.juegoNombre);
             }   
         });
         iniciarBox.setOnMouseExited((e) -> {
@@ -169,41 +166,5 @@ public class escenaMenu implements EscenaControlable {
         effect.setOffsetY(7);
 
         return effect;
-    }
-
-    private Text textLabel(String mensaje) {
-        Text texto = new Text(mensaje);
-        texto.setFont(controlador.getBits());
-        texto.setFill(Color.WHITE);
-        texto.setStrokeType(StrokeType.OUTSIDE);
-        texto.setStroke(Color.BLACK);
-        texto.setStrokeWidth(1);
-        texto.setTextAlignment(TextAlignment.CENTER);
-        return texto;
-    }
-
-    private Button imageButton(String path) {
-        Image img = new Image(path);
-        ImageView view = new ImageView(img);
-
-        view.setFitHeight(80);
-        view.setPreserveRatio(true);
-
-        Button button = new Button();
-        button.setPrefSize(80, 80);
-        button.setGraphic(view);
-        button.setBackground(new Background(new BackgroundFill(null, null, null)));
-
-        //button.setStyle("-fx-border-color: #6600ff; -fx-border-width: 5px;");
-        return button;
-    }
-
-    private Button normalButton(String label, double parentWidth) {
-        Button button = new Button(label);
-        button.setPrefSize(parentWidth, 80);
-        button.setBackground(new Background(new BackgroundFill(null, null, null)));
-        button.setFont(controlador.getBits());
-        //button.setStyle("-fx-border-color: #6600ff; -fx-border-width: 5px;");
-        return button;
     }
 }

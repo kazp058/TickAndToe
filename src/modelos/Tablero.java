@@ -14,18 +14,32 @@ import java.util.ArrayList;
 public class Tablero{
     
     ArrayList<Character> tablero;
+    ArrayList<Celda> celdas;
+    
     
     public Tablero(){
         tablero = new ArrayList<Character>();
         
     }
     
-    public int getValue(int index){
-        return tablero.get(index);
+    public Character getValue(int i, int j){
+        return tablero.get(getIndex(i,j));
     }
     
-    public int setValue(int index, Character value){
-        return tablero.set(index, value);
+    public void setValue(int i, int j, Character value){
+        tablero.set(getIndex(i,j), value);
+    }
+    
+    public Celda getCell(int i, int j){        
+        return celdas.get(getIndex(i,j));
+    }
+    
+    private int getIndex(int i, int j){
+        return j * 3 + i;
+    }
+    
+    public void pressCell(int i, int j){
+        celdas.get(getIndex(i,j)).getButton().arm();
     }
     
 }

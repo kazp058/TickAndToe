@@ -125,6 +125,9 @@ public class escenaJuego implements EscenaControlable {
                 
                 Celda celda = new Celda(new Image(pathPlayer),new Image(pathComputer) , i, j, this);
                 celda.setMainAction();
+                celda.setTablero(tablero);
+                celda.setHolder(-1); //Holder -1 significa ninguno de los 2
+                tablero.addCell(celda);
                 //boton.setStyle("-fx-background-color: #223312");
                 container.add(celda.getButton(), i * 2, j * 2);
                 

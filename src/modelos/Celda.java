@@ -20,13 +20,48 @@ public class Celda {
 
     Image viewPlayer;
     Image viewComputer;
-    
+
     ImageView pointer;
-    
+
     Button button;
-    int i, j;
+    int i, j; //i columna y j fila
     char value;
     escenaJuego escena;
+    int holder; //Jugador 0, y Computador 1
+
+    Tablero tablero;
+
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    public int getJ() {
+        return j;
+    }
+
+    public void setJ(int j) {
+        this.j = j;
+    }
+
+    public int getHolder() {
+        return holder;
+    }
+
+    public void setHolder(int holder) {
+        this.holder = holder;
+    }
+
+    public Tablero getTablero() {
+        return tablero;
+    }
+
+    public void setTablero(Tablero tablero) {
+        this.tablero = tablero;
+    }
 
     public Button getButton() {
         return button;
@@ -47,13 +82,13 @@ public class Celda {
 
         button.setOnMouseEntered((e) -> {
             if (escena.getCurrentVal() == 0) {
-                button.setGraphic(generateImageView(viewPlayer));
+                if (value == '-') {
+                    button.setGraphic(generateImageView(viewPlayer));
+                }
             }
         });
         button.setOnMouseExited((e) -> {
-            System.out.println("Called");
             if (value == '-') {
-                System.out.println("Opps");
                 button.setGraphic(null);
             }
         });
@@ -61,29 +96,34 @@ public class Celda {
 
     public void setMainAction() {
         button.setOnMouseClicked((e) -> {
-            System.out.println("value before:" + value);
             if (escena.getCurrentVal() == 0 && value == '-') {
                 button.setGraphic(generateImageView(viewPlayer));
                 value = escena.getPlayerSymbol();
                 escena.setCurrentVal(1);
                 escena.getCurrent().setText("Computadora");
+                holder = 0;
+                System.out.println("tablero: " + tablero);
+                tablero.calculateOptions(holder);
+
             } else if (escena.getCurrentVal() == 1 && value == '-') {
                 button.setGraphic(generateImageView(viewComputer));
                 escena.setCurrentVal(0);
                 value = escena.getComputerSymbol();
                 escena.getCurrent().setText("Tu");
-                System.out.println("fff");
+                holder = 1;
+                System.out.println("tablero: " + tablero);
+
+                tablero.calculateOptions(holder);
             }
-            System.out.println("value after:" + value);
         });
     }
-    
-    public ImageView generateImageView(Image image){
+
+    public ImageView generateImageView(Image image) {
         ImageView view = new ImageView(image);
 
         view.setFitHeight(80);
         view.setPreserveRatio(true);
-        
+
         return view;
     }
 

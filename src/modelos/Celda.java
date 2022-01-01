@@ -102,8 +102,8 @@ public class Celda {
                 escena.setCurrentVal(1);
                 escena.getCurrent().setText("Computadora");
                 holder = 0;
-                System.out.println("tablero: " + tablero);
-                tablero.calculateOptions(holder);
+                System.out.println("tablero: " + tablero + " current: 0");
+                tablero.calculateOptions(0);
 
             } else if (escena.getCurrentVal() == 1 && value == '-') {
                 button.setGraphic(generateImageView(viewComputer));
@@ -111,9 +111,9 @@ public class Celda {
                 value = escena.getComputerSymbol();
                 escena.getCurrent().setText("Tu");
                 holder = 1;
-                System.out.println("tablero: " + tablero);
+                System.out.println("tablero: " + tablero + " current: 1");
 
-                tablero.calculateOptions(holder);
+                tablero.calculateOptions(1);
             }
         });
     }

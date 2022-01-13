@@ -139,10 +139,9 @@ public class Tablero {
         return -1;
     }
 
-    public int calculateOptions(int player) {
+    private int calculateOptions(int player) {
         int options = this.horizontalOptions(player) + this.verticalOptions(player) + this.diagonalOptions(player) + this.inverseDiagonalOptions(player);
-        System.out.println("options " + options);
-        return 0;
+        return options;
     }
 
 }

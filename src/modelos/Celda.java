@@ -103,7 +103,7 @@ public class Celda {
                 escena.getCurrent().setText("Computadora");
                 holder = 0;
                 System.out.println("tablero: " + tablero + " current: 0");
-                tablero.calculateOptions(0);
+                tablero.utility();
 
             } else if (escena.getCurrentVal() == 1 && value == '-') {
                 button.setGraphic(generateImageView(viewComputer));
@@ -113,7 +113,7 @@ public class Celda {
                 holder = 1;
                 System.out.println("tablero: " + tablero + " current: 1");
 
-                tablero.calculateOptions(1);
+                tablero.utility();
             }
         });
     }

@@ -159,6 +159,9 @@ public class Celda {
 
             value = escena.getCurrentPlayer().getPlayerSymbol();
             holder = escena.getCurrentPlayer().getPlayerAssignation();
+            
+            tablero.lastI = this.i;
+            tablero.lastJ = this.j;
 
             escena.setCurrentPlayer(escena.getCurrentPlayer().getOppossing());
             escena.getCurrent().setText(escena.getCurrentPlayer().getOppossing().getPlayerName());

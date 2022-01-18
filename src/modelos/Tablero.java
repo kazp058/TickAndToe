@@ -7,6 +7,8 @@ package modelos;
 
 import estructuras.Tree;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -131,8 +133,10 @@ public class Tablero {
     }
     
     public int hasWinner(){
-        int holder = -1;
         
+        System.out.println(celdas);
+        
+        int holder = -1;
         if(this.lastI == -1 && this.lastJ == -1) return -1;
         
         for(int i = 0; i < 3; i ++){
@@ -150,6 +154,7 @@ public class Tablero {
             return celdas.get(this.getIndex(1, 1)).getHolder();
         
         holder = 0;
+        System.out.println(celdas.get(this.getIndex(0, 2)).getHolder());
         holder += celdas.get(this.getIndex(0, 2)).getHolder();
         holder += celdas.get(this.getIndex(1, 1)).getHolder();
         holder += celdas.get(this.getIndex(2, 0)).getHolder();
@@ -243,6 +248,7 @@ public class Tablero {
     }
 
     private int calculateOptions(int player) {
+        System.out.println("options: "+ this.celdas);
         int options = this.horizontalOptions(player) + this.verticalOptions(player) + this.diagonalOptions(player) + this.inverseDiagonalOptions(player);
         return options;
     }

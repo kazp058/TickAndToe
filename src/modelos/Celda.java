@@ -8,6 +8,9 @@ package modelos;
 import escenas.EscenaControlable;
 import escenas.Toolkit;
 import escenas.escenaJuego;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,8 +21,8 @@ import javafx.scene.image.ImageView;
  */
 public class Celda {
 
-    Image viewPlayer;
-    Image viewComputer;
+    Image viewPlayerA;
+    Image viewPlayerB;
 
     ImageView pointer;
 
@@ -80,20 +83,25 @@ public class Celda {
         this.button = button;
     }
 
-    public Celda(Image player, Image computer, int i, int j, escenaJuego parent) {
+    public Celda(Image playerA, Image playerB, int i, int j, escenaJuego parent) {
         this.i = i;
         this.j = j;
-        this.viewPlayer = player;
-        this.viewComputer = computer;
+        this.viewPlayerA = playerA;
+        this.viewPlayerB = playerB;
         value = '-';
         this.escena = parent;
         this.holder = -1;
         button = Toolkit.emptyImageButton();
 
         button.setOnMouseEntered((e) -> {
-            if (escena.getCurrentVal() == 0) {
+            if (escena.getCurrentPlayer().playerTypeAI == 0) {
                 if (value == '-') {
-                    button.setGraphic(generateImageView(viewPlayer));
+
+                    if (escena.getCurrentPlayer() == escena.getPlayerA()) {
+                        button.setGraphic(generateImageView(viewPlayerA));
+                    } else if (escena.getCurrentPlayer() == escena.getPlayerB()) {
+                        button.setGraphic(generateImageView(viewPlayerB));
+                    }
                 }
             }
         });
@@ -106,6 +114,7 @@ public class Celda {
 
     public void setMainAction() {
         button.setOnMouseClicked((e) -> {
+            System.out.println("clicked here: " + this);
             this.click();
             //escena.calculateMove();
             //System.out.println(escena.getPossibleBestMove());
@@ -134,33 +143,41 @@ public class Celda {
 
     public boolean click() {
 
-        if (escena.getCurrentVal() == 0 && value == '-') {
-            button.setGraphic(generateImageView(viewPlayer));
-            value = escena.getPlayerSymbol();
-            escena.setCurrentVal(1);
-            escena.getCurrent().setText("Computadora");
-            holder = 0;
-            int winner = tablero.hasWinner();
+        System.out.println("executed here: " + this.i + " , " + this.j);
 
-            if (winner == -1) {
-                escena.calculateMove();
-                int[] next = escena.getPossibleBestMove();
-                tablero.pressCell(next[0], next[1]);
-            }else{
-                escena.setWinner(winner);
-            }
-        } else if (escena.getCurrentVal() == 1 && value == '-') {
-            button.setGraphic(generateImageView(viewComputer));
-            escena.setCurrentVal(0);
-            value = escena.getComputerSymbol();
-            escena.getCurrent().setText("Tu");
-
-            holder = 1;
-        }
-        
         int winner = tablero.hasWinner();
         if (winner != -1) {
             escena.setWinner(winner);
+        }
+
+        if (value == '-') {
+            if (escena.getCurrentPlayer() == escena.getPlayerA()) {
+                button.setGraphic(generateImageView(viewPlayerA));
+            } else if (escena.getCurrentPlayer() == escena.getPlayerB()) {
+                button.setGraphic(generateImageView(viewPlayerB));
+            }
+
+            value = escena.getCurrentPlayer().getPlayerSymbol();
+            holder = escena.getCurrentPlayer().getPlayerAssignation();
+
+            escena.setCurrentPlayer(escena.getCurrentPlayer().getOppossing());
+            escena.getCurrent().setText(escena.getCurrentPlayer().getOppossing().getPlayerName());
+
+            winner = tablero.hasWinner();
+            System.out.println("Winner: " + winner);
+            if (winner != -1) {
+                escena.setWinner(winner);
+            } else {
+                System.out.println("current: " + escena.getCurrentPlayer().getPlayerTypeAI());
+                if (escena.getCurrentPlayer().getPlayerTypeAI() == 1) {
+                    System.out.println("Movimiento calculado");
+                    escena.calculateMove();
+                    if (escena.getPossibleBestMove() != null) {
+                        int[] next = escena.getPossibleBestMove();
+                        //tablero.pressCell(next[0], next[1]);
+                    }
+                }
+            }
         }
 
         return false;

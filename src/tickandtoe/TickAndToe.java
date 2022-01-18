@@ -47,9 +47,7 @@ public class TickAndToe extends Application {
         controlador.setBits(bits);
         controlador.setBitsTitle(bitsTitle);
         controlador.setSize(new Integer[]{1280,720});
-        
-        System.out.println(controlador.getInicia());
-        
+                
         EscenaControlable menuPrincipal = new escenaMenu();
         EscenaControlable juego = new escenaJuego();
         

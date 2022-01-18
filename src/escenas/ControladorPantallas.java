@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modelos.Player;
 
 /**
  *
@@ -20,8 +21,10 @@ public class ControladorPantallas {
     private Scene escenaActual;
     private Stage stage;
 
-    private char jugador;
-    private short inicia; //Si es 0 inicia el jugador, si es 1 inicia el computador
+    private Player playerA;
+    private Player playerB; //Si es 0 inicia el jugador, si es 1 inicia el computador
+
+    private Player inicia;
 
     public static String juegoNombre = "playground";
     public static String menuNombre = "menu";
@@ -29,16 +32,24 @@ public class ControladorPantallas {
 
     public ControladorPantallas() {
 
-        this.jugador = '-';
-        this.inicia = -1;
+        this.playerA = new Player();
+        this.playerB = new Player();
     }
 
-    public char getJugador() {
-        return jugador;
+    public Player getPlayerA() {
+        return playerA;
     }
 
-    public void setJugador(char jugador) {
-        this.jugador = jugador;
+    public void setPlayerA(Player playerA) {
+        this.playerA = playerA;
+    }
+
+    public Player getPlayerB() {
+        return playerB;
+    }
+
+    public void setPlayerB(Player playerB) {
+        this.playerB = playerB;
     }
 
     private Integer[] dimensiones;
@@ -65,11 +76,11 @@ public class ControladorPantallas {
         return bits;
     }
 
-    public short getInicia() {
+    public Player getInicia() {
         return inicia;
     }
 
-    public void setInicia(short inicia) {
+    public void setInicia(Player inicia) {
         this.inicia = inicia;
     }
 
@@ -79,8 +90,10 @@ public class ControladorPantallas {
 
     public ControladorPantallas(Stage stage) {
         this.stage = stage;
-        this.jugador = '-';
-        this.inicia = -1;
+
+        this.playerA = new Player();
+        this.playerB = new Player();
+
     }
 
     public Stage getStage() {

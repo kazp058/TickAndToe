@@ -5,6 +5,7 @@
  */
 package estructuras;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class TreeNode<E> {
     
     public TreeNode(E content){
         this.content = content;
-        this.children = new LinkedList<>();
+        this.children = new ArrayList<Tree<E>>();
     }
 
     public E getContent() {
@@ -37,4 +38,9 @@ public class TreeNode<E> {
     public void setChildren(List<Tree<E>> children) {
         this.children = children;
     }    
+
+    @Override
+    public String toString() {
+        return "TreeNode{" + "content=" + content + "children={"+ children +"} }";
+    }
 }

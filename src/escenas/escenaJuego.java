@@ -16,6 +16,9 @@ import java.util.logging.Logger;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -104,7 +107,8 @@ public class escenaJuego implements EscenaControlable {
                 10);
 
         Button next = Toolkit.normalButton("Continuar", 150, controlador.getBits());
-
+        Button menu = Toolkit.normalButton("Menu", 80, controlador.getBits());
+        
         next.setOnMouseClicked((e) -> {
             if (currentPlayer.getPlayerTypeAI() == 1) {
                 next.setStyle("-fx-background-color: #6600ff");
@@ -112,7 +116,13 @@ public class escenaJuego implements EscenaControlable {
                 this.calculateMove();
                 System.out.println(possibleBestMove);
                 this.tablero.pressCell(this.possibleBestMove[0], this.possibleBestMove[1]);
-                next.setStyle("-fx-background-color: transparent");
+
+                if (currentPlayer.getPlayerTypeAI() == 1) {
+                    next.setStyle("-fx-background-color: #dcccff");
+                } else {
+                    next.setStyle("-fx-background-color: transparent");
+
+                }
             }
         });
 
@@ -126,8 +136,19 @@ public class escenaJuego implements EscenaControlable {
                 next.setStyle("-fx-background-color: transparent");
             }
         });
+        
+        menu.setOnMouseClicked((e) -> {
+            controlador.setScene(controlador.menuNombre);
+        });
 
-        toolbox.getChildren().addAll(currentBox, next);
+        menu.setOnMouseEntered((e) -> {
+                menu.setStyle("-fx-background-color: #dcccff");
+        });
+        menu.setOnMouseExited((e) -> {
+                menu.setStyle("-fx-background-color: transparent");
+        });
+
+        toolbox.getChildren().addAll(currentBox, next, menu);
 
         //currentTurn.getChildren().add(current);
         //currentTurn.setAlignment(Pos.CENTER);
@@ -280,7 +301,7 @@ public class escenaJuego implements EscenaControlable {
         //Tree<Tablero> best = utilityTree.getChildren().get(idxBest);
 
         this.possibleBestMove = best.getLast();
-        System.out.println("coords: " + this.possibleBestMove[0] + " , " + this.possibleBestMove[1] );
+        System.out.println("coords: " + this.possibleBestMove[0] + " , " + this.possibleBestMove[1]);
     }
 
     public int[] getPossibleBestMove() {
@@ -301,6 +322,24 @@ public class escenaJuego implements EscenaControlable {
 
     public void setWinner(int winner) {
         tablero.disableCells();
+
+        Dialog<String> dialog = new Dialog<String>();
+
+        dialog.setTitle("Resultado");
+        ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
+        //Setting the content of the dialog
+        if (winner == 0) {
+            dialog.setContentText("El ganador es: " + this.playerA.getPlayerName());
+        } else if (winner == 1) {
+            dialog.setContentText("El ganador es: " + this.playerB.getPlayerName());
+        } else {
+            dialog.setContentText("Es un empate");
+        }
+//Adding buttons to the dialog pane
+        dialog.getDialogPane().getButtonTypes().add(type);
+
+        dialog.showAndWait();
+
         System.out.println("winner: " + winner);
 
     }

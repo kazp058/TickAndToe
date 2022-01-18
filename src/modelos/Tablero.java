@@ -134,10 +134,12 @@ public class Tablero {
     
     public int hasWinner(){
         
-        System.out.println(celdas);
+        System.out.println("called hasWinner:" + celdas);
         
         int holder = -1;
         if(this.lastI == -1 && this.lastJ == -1) return -1;
+        
+        System.out.println("here");
         
         for(int i = 0; i < 3; i ++){
             holder = this.checkHorizontal(i);

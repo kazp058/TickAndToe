@@ -23,13 +23,22 @@ public class Celda {
 
     ImageView pointer;
 
-    Button button;
-    int i, j; //i columna y j fila
-    char value;
     escenaJuego escena;
     int holder; //Jugador 0, y Computador 1
 
     Tablero tablero;
+
+    Button button;
+    int i, j; //i columna y j fila
+    char value;
+
+    public escenaJuego getEscena() {
+        return escena;
+    }
+
+    public void setEscena(escenaJuego escena) {
+        this.escena = escena;
+    }
 
     public int getI() {
         return i;
@@ -78,6 +87,7 @@ public class Celda {
         this.viewComputer = computer;
         value = '-';
         this.escena = parent;
+        this.holder = -1;
         button = Toolkit.emptyImageButton();
 
         button.setOnMouseEntered((e) -> {
@@ -96,25 +106,9 @@ public class Celda {
 
     public void setMainAction() {
         button.setOnMouseClicked((e) -> {
-            if (escena.getCurrentVal() == 0 && value == '-') {
-                button.setGraphic(generateImageView(viewPlayer));
-                value = escena.getPlayerSymbol();
-                escena.setCurrentVal(1);
-                escena.getCurrent().setText("Computadora");
-                holder = 0;
-                System.out.println("tablero: " + tablero + " current: 0");
-                tablero.utility();
-
-            } else if (escena.getCurrentVal() == 1 && value == '-') {
-                button.setGraphic(generateImageView(viewComputer));
-                escena.setCurrentVal(0);
-                value = escena.getComputerSymbol();
-                escena.getCurrent().setText("Tu");
-                holder = 1;
-                System.out.println("tablero: " + tablero + " current: 1");
-
-                tablero.utility();
-            }
+            this.click();
+            //escena.calculateMove();
+            //System.out.println(escena.getPossibleBestMove());
         });
     }
 
@@ -125,6 +119,51 @@ public class Celda {
         view.setPreserveRatio(true);
 
         return view;
+    }
+
+    public Celda copy(Tablero tablero) {
+        Celda newCelda = escena.initCell(i, j, tablero);
+        newCelda.setHolder(holder);
+        return newCelda;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(holder);
+    }
+
+    public boolean click() {
+
+        if (escena.getCurrentVal() == 0 && value == '-') {
+            button.setGraphic(generateImageView(viewPlayer));
+            value = escena.getPlayerSymbol();
+            escena.setCurrentVal(1);
+            escena.getCurrent().setText("Computadora");
+            holder = 0;
+            int winner = tablero.hasWinner();
+
+            if (winner == -1) {
+                escena.calculateMove();
+                int[] next = escena.getPossibleBestMove();
+                tablero.pressCell(next[0], next[1]);
+            }else{
+                escena.setWinner(winner);
+            }
+        } else if (escena.getCurrentVal() == 1 && value == '-') {
+            button.setGraphic(generateImageView(viewComputer));
+            escena.setCurrentVal(0);
+            value = escena.getComputerSymbol();
+            escena.getCurrent().setText("Tu");
+
+            holder = 1;
+        }
+        
+        int winner = tablero.hasWinner();
+        if (winner != -1) {
+            escena.setWinner(winner);
+        }
+
+        return false;
     }
 
 }

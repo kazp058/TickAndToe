@@ -19,7 +19,11 @@ public class Tree<E> {
     private Comparator cmp;
 
     public Tree() {
-        this(null);
+        this((TreeNode<E>) null);
+    }
+    
+    public Tree(E root) {
+        this(new TreeNode<E>(root));
     }
 
     public Tree(TreeNode<E> root) {
@@ -47,15 +51,15 @@ public class Tree<E> {
     }
 
     public void addChildren(E content) {
-        TreeNode node = new TreeNode(content);
+        TreeNode node = new TreeNode<E>(content);
         addChildren(node);
     }
 
-    public void addChildren(TreeNode node) {
-        addChildren(node, root.getChildren().size() - 1);
+    public void addChildren(TreeNode<E> node) {
+        addChildren(node, root.getChildren().size());
     }
     
-    public void addChildren(TreeNode node, int i){
+    public void addChildren(TreeNode<E> node, int i){
         root.getChildren().add(i, new Tree(node));
     }
     
@@ -75,5 +79,10 @@ public class Tree<E> {
         
         
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Tree{" + root + '}';
     }
 }

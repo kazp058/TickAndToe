@@ -5,6 +5,7 @@
  */
 package modelos;
 
+import estructuras.Tree;
 import java.util.ArrayList;
 
 /**
@@ -16,11 +17,12 @@ public class Tablero {
     //Jugador es 0 y Computador es 1
     ArrayList<Character> tablero;
     ArrayList<Celda> celdas;
+    
+    Tree<Tablero> utilityTree;
 
     public Tablero() {
         tablero = new ArrayList<Character>();
         celdas = new ArrayList<Celda>();
-
     }
 
     public Character getValue(int i, int j) {
@@ -54,7 +56,6 @@ public class Tablero {
     private int horizontalOptions(int player) {
         int options = 0;
         for (int i = 0; i < 3; i++) { //calcular todas las posibilidades horizontales
-            int pos = i * 3;
             int count = 0;
             for (int j = 0; j < 3; j++) {
                 if (this.getCell(i, j).holder != -1 && this.getCell(i, j).holder != player) {

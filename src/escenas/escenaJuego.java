@@ -37,7 +37,7 @@ import modelos.Tablero;
  *
  * @author Kevin Zhang <kzhang@espol.edu.ec>
  */
-public class escenaJuego implements EscenaControlable {
+public class escenaJuego implements EscenaControlable, EscenaJugable{
 
     ControladorPantallas controlador;
     Text current;

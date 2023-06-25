@@ -5,6 +5,10 @@
  */
 package escenas;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +19,7 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import tickandtoe.TickAndToe;
 
 /**
  *
@@ -65,5 +70,34 @@ public class Toolkit {
         button.setFont(font);
         //button.setStyle("-fx-border-color: #6600ff; -fx-border-width: 5px;");
         return button;
+    }
+    
+    public static Font makeFont(String url1, int size){
+        Font font;
+        try {
+            font = Font.loadFont(new FileInputStream(url1), size);
+
+            return font;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TickAndToe.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public static Scene makeScene(Font bits, Font bitsTitle, Stage stage){
+            
+        ControladorPantallas controlador = new ControladorPantallas(stage);
+        controlador.setBits(bits);
+        controlador.setBitsTitle(bitsTitle);
+        controlador.setSize(new Integer[]{1280,720});
+                
+        EscenaControlable menuPrincipal = new escenaMenu();
+        EscenaControlable juego = new escenaJuego();
+        
+        controlador.addScene(controlador.menuNombre, menuPrincipal);
+        controlador.addScene(controlador.juegoNombre, juego);
+        controlador.setScene(controlador.menuNombre);
+        
+        Scene scene = controlador.getScene();
+        return scene;
     }
 }

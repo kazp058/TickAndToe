@@ -6,7 +6,6 @@
 package modelos;
 
 import escenas.EscenaControlable;
-import escenas.EscenaJugable;
 import escenas.Toolkit;
 import escenas.escenaJuego;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +26,7 @@ public class Celda {
 
     ImageView pointer;
 
-    EscenaJugable escena;
+    escenaJuego escena;
     int holder; //Jugador 0, y Computador 1
 
     Tablero tablero;

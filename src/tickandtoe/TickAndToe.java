@@ -34,31 +34,12 @@ public class TickAndToe extends Application {
     @Override
     public void start(Stage primaryStage) {
         
-        try {
-            this.bits = Font.loadFont(new FileInputStream("src/res/upheavtt.ttf"), 20);
-            this.bitsTitle = Font.loadFont(new FileInputStream("src/res/upheavtt.ttf"), 40);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TickAndToe.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+        this.bits = Toolkit.makeFont("src/res/upheavtt.ttf", 20);
+        this.bitsTitle =  Toolkit.makeFont("src/res/upheavtt.ttf", 40);
         this.stage = primaryStage;
         
-        ControladorPantallas controlador = new ControladorPantallas(this.stage);
-        controlador.setBits(bits);
-        controlador.setBitsTitle(bitsTitle);
-        controlador.setSize(new Integer[]{1280,720});
-                
-        EscenaControlable menuPrincipal = new escenaMenu();
-        EscenaControlable juego = new escenaJuego();
-        
-        controlador.addScene(controlador.menuNombre, menuPrincipal);
-        controlador.addScene(controlador.juegoNombre, juego);
-        controlador.setScene(controlador.menuNombre);
-        
-        Scene scene = controlador.getScene();
-        
         primaryStage.setTitle("Tick & Toe");
-        primaryStage.setScene(scene);
+        primaryStage.setScene(Toolkit.makeScene(this.bits, this.bitsTitle, this.stage));
         primaryStage.show();
         primaryStage.setOnCloseRequest((e) -> {
         });

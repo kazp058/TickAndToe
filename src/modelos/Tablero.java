@@ -15,6 +15,23 @@ import java.util.logging.Logger;
  * @author Kevin Zhang <kzhang@espol.edu.ec>
  */
 public class Tablero {
+	
+	 private static Tablero instance = null; // Campo estático para almacenar la única instancia
+
+	    private Tablero(ArrayList<Celda> celdas) {
+	        this.celdas = celdas;
+	        lastI = -1;
+	        lastJ = -1;
+	        this.currentUtiliy = -1;
+	    }
+
+	    // Método público y estático para obtener la única instancia del Tablero
+	    public static Tablero getInstance() {
+	        if (instance == null) {
+	            instance = new Tablero(new ArrayList<>());
+	        }
+	        return instance;
+	    }
 
     //Jugador es 0 y Computador es 1
     ArrayList<Celda> celdas;
@@ -40,12 +57,6 @@ public class Tablero {
         this(new ArrayList<Celda>());
     }
 
-    public Tablero(ArrayList<Celda> celdas) {
-        this.celdas = celdas;
-        lastI = -1;
-        lastJ = -1;
-        this.currentUtiliy = -1;
-    }
 
     public boolean setValue(int i, int j, int holder) {
         Celda celda = celdas.get(this.getIndex(i, j));

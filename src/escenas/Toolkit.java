@@ -20,6 +20,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import tickandtoe.TickAndToe;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+
 
 /**
  *
@@ -81,6 +85,7 @@ public class Toolkit {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(TickAndToe.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
     
     public static Scene makeScene(Font bits, Font bitsTitle, Stage stage){

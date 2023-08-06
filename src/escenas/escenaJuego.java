@@ -32,6 +32,8 @@ import javafx.scene.text.TextAlignment;
 import modelos.Celda;
 import modelos.Player;
 import modelos.Tablero;
+import javafx.scene.layout.GridPane;
+
 
 /**
  *
@@ -97,7 +99,7 @@ public class escenaJuego implements EscenaControlable, EscenaJugable{
         pathPlayerA = "res/" + playerA.getPlayerSymbol() + ".png";
         pathPlayerB = "res/" + playerB.getPlayerSymbol() + ".png";
 
-        HBox currentBox = new HBox();
+        HBox currentBox = new HBox(); 
         currentBox.setAlignment(Pos.CENTER);
 
         currentBox.getChildren()
@@ -196,7 +198,8 @@ public class escenaJuego implements EscenaControlable, EscenaJugable{
         this.playerB = playerB;
     }
 
-    private GridPane generateTable() {
+    @Override
+    public GridPane generateTable() {
         GridPane container = new GridPane();
         container.setStyle("-fx-background-color: #454545");
         container.setHgap(3);

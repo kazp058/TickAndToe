@@ -7,6 +7,7 @@ package tickandtoe;
 
 import escenas.ControladorPantallas;
 import escenas.EscenaControlable;
+import escenas.Toolkit;
 import escenas.escenaJuego;
 import escenas.escenaMenu;
 import java.io.FileInputStream;

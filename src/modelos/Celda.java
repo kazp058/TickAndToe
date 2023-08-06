@@ -36,7 +36,7 @@ public class Celda {
     int i, j; //i columna y j fila
     char value;
 
-    public escenaJuego getEscena() {
+    public EscenaJugable getEscena() {
         return escena;
     }
 

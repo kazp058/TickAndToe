@@ -7,13 +7,15 @@ package escenas;
 import modelos.Celda;
 import modelos.Player;
 import modelos.Tablero;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 /**
  *
  * @author PC
  */
 public interface EscenaJugable {
-    private GridPane generateTable();
+    public GridPane generateTable();
     public Celda initCell(int i, int j);
     public Celda initCell(int i, int j, Tablero tablero);
     public void calculateMove();

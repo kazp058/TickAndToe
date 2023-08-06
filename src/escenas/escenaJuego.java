@@ -48,7 +48,7 @@ public class escenaJuego implements EscenaControlable, EscenaJugable{
 
     Player winner;
 
-    Tablero tablero;
+    Tablero tablero = Tablero.getInstance();
 
     int[] possibleBestMove;
 

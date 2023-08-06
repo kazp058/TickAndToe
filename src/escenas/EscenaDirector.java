@@ -8,6 +8,8 @@ package escenas;
  *
  * @author PC
  */
-public class EscenaJugadorVJugador {
-    
+public class EscenaDirector {
+    public void makeEscenaPVP(EscenaBuilder builder){}
+    public void makeEscenaPVC(EscenaBuilder builder){}
+    public void makeEscenaCVC(EscenaBuilder builder){}
 }

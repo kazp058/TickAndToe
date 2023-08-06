@@ -8,6 +8,6 @@ package escenas;
  *
  * @author PC
  */
-public class EscenaAIVAI {
+public class EscenaPVCBuilder {
     
 }

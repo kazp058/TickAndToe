@@ -4,10 +4,15 @@
  */
 package escenas;
 
+import modelos.Player;
+import modelos.Tablero;
+
 /**
  *
  * @author PC
  */
-public class EscenaJugadorVAI {
-    
+public interface EscenaBuilder {
+    public void reset();
+    public void setPlayerA(Player player);
+    public void setTablero(Tablero tablero);
 }

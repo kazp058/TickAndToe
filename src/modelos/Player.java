@@ -5,11 +5,13 @@
  */
 package modelos;
 
+import escenas.IPlayer;
+
 /**
  *
  * @author Kevin Zhang <kzhang@espol.edu.ec>
  */
-public class Player {
+public class Player implements IPlayer{
     
     int playerTypeAI; // 0 es humano y 1 es computadora, -1 no asignado
     String playerName; //El nombre que haya ingresado el jugador
@@ -69,5 +71,10 @@ public class Player {
 
     public void setPlayerAssignation(int playerAssignation) {
         this.playerAssignation = playerAssignation;
+    }
+
+    @Override
+    public void makeMove(Tablero tablero) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
